@@ -40,7 +40,7 @@ def test_calculate_loan_invalid_loan_amount(app):
     assert "Ежемесячный платеж: 0" in app.monthly_label.cget("text")
 
 
-@patch('main.get_saved_rate')
+@patch("main.get_saved_rate")
 def test_convert_success(mock_get_saved_rate, app):
     """Проверяет успешность конвертации"""
     mock_get_saved_rate.return_value = 80.0
@@ -53,7 +53,7 @@ def test_convert_success(mock_get_saved_rate, app):
     assert "125.00 USD" in app.result_label.cget("text")
 
 
-@patch('main.get_saved_rate')
+@patch("main.get_saved_rate")
 def test_convert_none_rate(mock_get_saved_rate, app):
     """Проверяет конвертацию, когда курс является None (или 0.0)"""
     mock_get_saved_rate.return_value = 0.0
@@ -68,7 +68,7 @@ def test_convert_none_rate(mock_get_saved_rate, app):
     assert "Ошибка: Курс для USD не найден." in log_content
 
 
-@patch('main.get_saved_rate')
+@patch("main.get_saved_rate")
 def test_convert_exception(mock_get_saved_rate, app):
     """Проверяет обработку исключений (например, ввели букву вместо суммы)"""
     app.loan_var.set("ABCDEF")
@@ -81,16 +81,13 @@ def test_convert_exception(mock_get_saved_rate, app):
     assert "Ошибка: Введите сумму кредита цифрами" in log_content
 
 
-@patch('main.fetch_rates')
-@patch('main.save_rate')
+@patch("main.fetch_rates")
+@patch("main.save_rate")
 def test_update_db_success(mock_save_rate, mock_fetch_rates, app):
     """Проверяет успешность обновления БД"""
     mock_fetch_rates.return_value = {
         "Date": "2026-11-14",
-        "Valute": {
-            "USD": {"Value": 90.0},
-            "EUR": {"Value": 100.0}
-        }
+        "Valute": {"USD": {"Value": 90.0}, "EUR": {"Value": 100.0}},
     }
 
     app.log_text.delete("1.0", "end")
@@ -102,7 +99,7 @@ def test_update_db_success(mock_save_rate, mock_fetch_rates, app):
     assert "Успешно обновлено 2 валют" in log_content
 
 
-@patch('main.fetch_rates')
+@patch("main.fetch_rates")
 def test_update_db_empty_rates(mock_fetch_rates, app):
     """Проверяет обновление БД пустым списком курсов"""
     mock_fetch_rates.return_value = {}

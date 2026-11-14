@@ -23,7 +23,7 @@
 1. **Клонируйте репозиторий** или скачайте файлы проекта:
    ```bash
    git clone https://github.com/oleysa3020/calculator.git
-   cd <название_папки_проекта>
+   cd calculator
    
 2. **Установите зависимости** (библиотеку requests):
 ```bash
